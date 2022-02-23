@@ -10,7 +10,7 @@ export default function TodoList() {
   const [todo, setTodo] = useState("");
   const [priority, setPriority] = useState("Medium");
   const todoList = useSelector(todosRemaining)
-
+  
 
   const handleTextChange = (event) => {
     setTodo(event.target.value);
@@ -35,7 +35,7 @@ export default function TodoList() {
     <Row style={{ height: "calc(100% - 40px)" }}>
       <Col span={24} style={{ height: "calc(100% - 40px)", overflowY: "auto" }}>
         {todoList.map((todo) => (
-          <Todo key={todo.id} name={todo.name} prioriry={todo.priority} />
+          <Todo key={todo.id} todoId={todo.id} name={todo.name} prioriry={todo.priority} completed={todo.completed} />
         ))}
       </Col>
       <Col span={24}>

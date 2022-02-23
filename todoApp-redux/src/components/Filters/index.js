@@ -1,7 +1,8 @@
-import { Col, Row, Input, Typography, Radio, Select, Tag } from 'antd';
-import {useState} from 'react'
-import { useDispatch } from 'react-redux';
+import { Col, Row, Input, Typography, Radio, Select, Tag,Modal } from 'antd';
+import {useState,useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { searchFilter } from '../../redux/actions';
+import { todoListSelector } from '../../redux/selectors';
 const { Search } = Input;
 
 export default function Filters() {
@@ -11,6 +12,14 @@ export default function Filters() {
     setSearch(event.target.value)
     dispatch(searchFilter(event.target.value))
   }
+  const todoList = useSelector(todoListSelector)
+  const [todoAll, setTodoAll] = useState(todoList.length)
+  const [todoCompleted,setTodoCompleted] = useState(todoList.filter(todo=> todo.completed===true).length)
+  useEffect(()=>{
+    setTodoAll(todoList.length)
+    setTodoCompleted(todoList.filter(todo=> todo.completed===true).length)
+    
+  },[todoList])
   return (
     <Row justify='center'>
       <Col span={24}>
@@ -21,41 +30,21 @@ export default function Filters() {
         </Typography.Paragraph>
         <Search placeholder='input search text' onChange={handleChangeText} />
       </Col>
-      <Col sm={24}>
+      <Col span={24}>
         <Typography.Paragraph
           style={{ fontWeight: 'bold', marginBottom: 3, marginTop: 10 }}
         >
-          Filter By Status
+          All : {todoAll}   
+         
         </Typography.Paragraph>
-        <Radio.Group>
-          <Radio value='All'>All</Radio>
-          <Radio value='Completed'>Completed</Radio>
-          <Radio value='Todo'>To do</Radio>
-        </Radio.Group>
-      </Col>
-      <Col sm={24}>
         <Typography.Paragraph
           style={{ fontWeight: 'bold', marginBottom: 3, marginTop: 10 }}
         >
-          Filter By Priority
+          Completed : {todoCompleted}
+         
         </Typography.Paragraph>
-        <Select
-          mode='multiple'
-          allowClear
-          placeholder='Please select'
-          style={{ width: '100%' }}
-        >
-          <Select.Option value='High' label='High'>
-            <Tag color='red'>High</Tag>
-          </Select.Option>
-          <Select.Option value='Medium' label='Medium'>
-            <Tag color='blue'>Medium</Tag>
-          </Select.Option>
-          <Select.Option value='Low' label='Low'>
-            <Tag color='gray'>Low</Tag>
-          </Select.Option>
-        </Select>
       </Col>
+      
     </Row>
   );
 }
