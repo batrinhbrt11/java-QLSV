@@ -20,16 +20,18 @@ export default function TodoList() {
   };
   const dispatch = useDispatch();
   const handleAddButtonClick = () => {
-    dispatch(
-      addTodo({
-        id: uuidv4(),
-        name: todo,
-        priority: priority,
-        completed: false,
-      })
-    );
-    setPriority("Medium")
-    setTodo("")
+    if(todo !== ""){
+      dispatch(
+        addTodo({
+          id: uuidv4(),
+          name: todo,
+          priority: priority,
+          completed: false,
+        })
+      );
+      setPriority("Medium")
+      setTodo("")
+    }
   };
   return (
     <Row style={{ height: "calc(100% - 40px)" }}>

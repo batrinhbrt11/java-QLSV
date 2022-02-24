@@ -3,9 +3,7 @@ const initState = {
     search: "",
   },
   todoList: [
-    { id: 1, name: "Learn React", completed: false, priority: "Low" },
-    { id: 2, name: "Learn Redux", completed: true, priority: "Medium" },
-    { id: 3, name: "do exercise", completed: false, priority: "High" },
+    
   ],
 };
 const rootReducer = (state = initState, action) => {
